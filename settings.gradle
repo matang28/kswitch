@@ -1,0 +1,5 @@
+rootProject.name = 'kswitch'
+include 'commons'
+include 'client'
+include 'server'
+
