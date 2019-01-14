@@ -28,6 +28,8 @@ class AtomixDistributedGroupTests {
                 Assert.assertTrue(names2.contains(it))
                 Assert.assertTrue(names3.contains(it))
             }
+
+        testCluster.dispose()
     }
 
     @Test
@@ -57,6 +59,8 @@ class AtomixDistributedGroupTests {
 
         Assert.assertEquals(leaveLatch.count, 0)
         Assert.assertEquals(joinLatch.count, 0)
+
+        testCluster.dispose()
     }
 
     @Test
@@ -84,6 +88,8 @@ class AtomixDistributedGroupTests {
 
         messageLatch.await(10, TimeUnit.SECONDS)
         assertEquals(0, messageLatch.count)
+
+        testCluster.dispose()
     }
 
     @Test
@@ -111,6 +117,8 @@ class AtomixDistributedGroupTests {
 
         messageLatch.await(10, TimeUnit.SECONDS)
         assertEquals(0, messageLatch.count)
+
+        testCluster.dispose()
     }
 
     class TestCluster {
@@ -132,6 +140,12 @@ class AtomixDistributedGroupTests {
                 dg2 = member2 join cluster
                 dg3 = member3 join cluster
             }
+        }
+
+        fun dispose() = runBlocking {
+            dg1.disconnect()
+            dg2.disconnect()
+            dg3.disconnect()
         }
     }
 
